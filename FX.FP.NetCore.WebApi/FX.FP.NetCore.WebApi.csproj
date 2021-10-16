@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FX.FP.NetCore.Business\FX.FP.NetCore.Business.csproj" />
+    <ProjectReference Include="..\FX.FP.NetCore.Models\FX.FP.NetCore.Models.csproj" />
+    <ProjectReference Include="..\FX.FP.NetCore.Service\FX.FP.NetCore.Service.csproj" />
   </ItemGroup>
 
 </Project>

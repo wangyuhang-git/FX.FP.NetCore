@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FX.FP.NetCore.Interface;
+using FX.FP.NetCore.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,11 @@ namespace FX.FP.NetCore.WebApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IBlogPost<BlogPost> _blogPost;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IBlogPost<BlogPost> blogPost)
         {
             _logger = logger;
+            _blogPost = blogPost;
         }
 
         [HttpGet]
@@ -35,5 +38,12 @@ namespace FX.FP.NetCore.WebApi.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        public void Insert(string title, string content)
+        {
+            _blogPost.Insert(title, content);
+        }
+
     }
 }

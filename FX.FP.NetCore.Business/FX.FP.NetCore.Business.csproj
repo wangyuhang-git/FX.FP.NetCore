@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FX.FP.NetCore.Interface\FX.FP.NetCore.Interface.csproj" />
+    <ProjectReference Include="..\FX.FP.NetCore.Service\FX.FP.NetCore.Service.csproj" />
+  </ItemGroup>
+
 </Project>
