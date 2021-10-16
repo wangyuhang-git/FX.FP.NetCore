@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FX.FP.NetCore.Business
 {
-    public class BlogPostBusiness<T> : IBlogPost<T> where T : class,new()
+    public class BlogPostBusiness<T> : IBlogPost<T> where T : class, new()
     {
         MySqlHelper db = new MySqlHelper();
         public bool Insert(string title, string content)
@@ -17,7 +17,8 @@ namespace FX.FP.NetCore.Business
             Hashtable tb = new Hashtable();
             tb["title"] = title;
             tb["content"] = content;
-            return db.Submit_AddOrEdit(System.Data.CommandType.Text, "BlogPost", "", "", tb);
+            //return db.Submit_AddOrEdit(System.Data.CommandType.Text, "BlogPost", "", "", tb);
+            return db.Submit_AddOrEdit(System.Data.CommandType.Text, typeof(T).Name, "", "", tb);
         }
     }
 }
