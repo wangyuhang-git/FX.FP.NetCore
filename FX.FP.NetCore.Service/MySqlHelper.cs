@@ -5,6 +5,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +14,16 @@ namespace FX.FP.NetCore.Service
 {
     public class MySqlHelper : IDisposable
     {
+        /// <summary>
+        /// 批量操作每批次记录数
+        /// </summary>
+        protected static int BatchSize = 2000;
+
+        /// <summary>
+        /// 超时时间
+        /// </summary>
+        protected static int CommandTimeOut = 600;
+
         protected MySqlConnection connection;
         private string conntionStr;
         public MySqlHelper(string connStr = "DefaultConnection")
@@ -445,6 +457,132 @@ namespace FX.FP.NetCore.Service
                 result = (UpdateByHashtable(cmdType, tableName, pkName, pkVal, ht) > 0);
             }
             return result;
+        }
+
+        /// <summary>
+        ///使用MySqlDataAdapter批量更新数据
+        /// </summary>
+        /// <param name="table">dataTable数据表</param>
+        /// <returns>返回成功的更新数量</returns>
+        public int BatchUpdate(DataTable table)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandTimeout = CommandTimeOut;
+            command.CommandType = CommandType.Text;
+            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+            MySqlCommandBuilder commandBulider = new MySqlCommandBuilder(adapter);
+            commandBulider.ConflictOption = ConflictOption.OverwriteChanges;
+            MySqlTransaction transaction = null;
+
+            int updateCount = 0;
+            try
+            {
+                connection.Open();
+                transaction = connection.BeginTransaction();
+                //设置批量更新的每次处理条数
+                adapter.UpdateBatchSize = BatchSize;
+                //设置事务
+                adapter.SelectCommand.Transaction = transaction;
+
+                if (table.ExtendedProperties["SQL"] != null)
+                {
+                    adapter.SelectCommand.CommandText = table.ExtendedProperties["SQL"].ToString();
+                }
+                updateCount = adapter.Update(table);
+                transaction.Commit();/////提交事务
+            }
+            catch (MySqlException ex)
+            {
+                if (transaction != null) transaction.Rollback();
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return updateCount;
+        }
+
+        /// <summary>
+        ///大批量数据插入,返回成功插入行数
+        ///1、MySQL配置默认不开启允许本地导入文件的设置，设置如下：
+        ///  1）SET GLOBAL local_infile=1；//1表示开启，0表示关闭
+        ///     SHOW VARIABLES LIKE '%local%';设置后通过该语句查看，值为ON证明已开启
+        ///  2）数据库连接字符串要加上"AllowLoadLocalInfile=true"
+        ///2、数据库和项目站点在不同的服务器上，会提示找不到数据集文件，导致错误，
+        ///   因为项目中将数据集生成的文件保存在了项目所在的服务器
+        ///  1）MySqlBulkLoader类中要设置Local = true 读取本地文件，进行导入
+        /// </summary>
+        /// <param name="table">dataTable数据表数据表</param>
+        /// <returns>返回成功插入行数</returns>
+        public int BulkInsert(DataTable table, bool isLocal = true)
+        {
+            if (string.IsNullOrEmpty(table.TableName)) throw new Exception("请给DataTable的TableName属性附上表名称");
+            if (table.Rows.Count == 0) return 0;
+            int insertCount = 0;
+            string tmpPath = Path.GetTempFileName();
+            string csv = DataTableToCsv(table);
+            File.WriteAllText(tmpPath, csv);
+            using (connection)
+            {
+                MySqlTransaction tran = null;
+                try
+                {
+                    connection.Open();
+                    tran = connection.BeginTransaction();
+                    MySqlBulkLoader bulk = new MySqlBulkLoader(connection)
+                    {
+                        FieldTerminator = ",",
+                        FieldQuotationCharacter = '"',
+                        EscapeCharacter = '"',
+                        LineTerminator = "\r\n",
+                        FileName = tmpPath,
+                        Local = isLocal,
+                        NumberOfLinesToSkip = 0,
+                        TableName = table.TableName,
+                    };
+                    bulk.Columns.AddRange(table.Columns.Cast<DataColumn>().Select(colum => colum.ColumnName).ToList());
+                    insertCount = bulk.Load();
+                    tran.Commit();
+                }
+                catch (MySqlException ex)
+                {
+                    if (tran != null) tran.Rollback();
+                    throw ex;
+                }
+            }
+            File.Delete(tmpPath);
+            return insertCount;
+        }
+
+        /// <summary>
+        ///将DataTable转换为标准的CSV
+        /// </summary>
+        /// <param name="table">数据表</param>
+        /// <returns>返回标准的CSV</returns>
+        private static string DataTableToCsv(DataTable table)
+        {
+            //以半角逗号（即,）作分隔符，列为空也要表达其存在。
+            //列内容如存在半角逗号（即,）则用半角引号（即""）将该字段值包含起来。
+            //列内容如存在半角引号（即"）则应替换成半角双引号（""）转义，并用半角引号（即""）将该字段值包含起来。
+            StringBuilder sb = new StringBuilder();
+            DataColumn colum;
+            foreach (DataRow row in table.Rows)
+            {
+                for (int i = 0; i < table.Columns.Count; i++)
+                {
+                    colum = table.Columns[i];
+                    if (i != 0) sb.Append(",");
+                    if (colum.DataType == typeof(string) && row[colum].ToString().Contains(","))
+                    {
+                        sb.Append("\"" + row[colum].ToString().Replace("\"", "\"\"") + "\"");
+                    }
+                    else sb.Append(row[colum].ToString());
+                }
+                sb.AppendLine();
+            }
+            return sb.ToString();
         }
 
         /// <summary>

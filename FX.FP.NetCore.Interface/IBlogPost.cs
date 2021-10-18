@@ -9,5 +9,7 @@ namespace FX.FP.NetCore.Interface
     public interface IBlogPost<T> where T : class, new()
     {
         bool Insert(string title, string content);
+
+        List<T> GetList();
     }
 }

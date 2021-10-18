@@ -20,5 +20,11 @@ namespace FX.FP.NetCore.Business
             //return db.Submit_AddOrEdit(System.Data.CommandType.Text, "BlogPost", "", "", tb);
             return db.Submit_AddOrEdit(System.Data.CommandType.Text, typeof(T).Name, "", "", tb);
         }
+
+        public List<T> GetList()
+        {
+            List<T> list = db.GetListBySQL<T>(System.Data.CommandType.Text, "select * from BlogPost").ToList();
+            return list;
+        }
     }
 }

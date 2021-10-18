@@ -45,5 +45,10 @@ namespace FX.FP.NetCore.WebApi.Controllers
             _blogPost.Insert(title, content);
         }
 
+        [HttpGet("GetList")]
+        public List<BlogPost> GetList()
+        {
+            return (_blogPost.GetList());
+        }
     }
 }
