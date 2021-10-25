@@ -325,6 +325,40 @@ namespace FX.FP.NetCore.Service
         }
 
         /// <summary>
+        /// 根据sql语句进行分页获取dataTable
+        /// </summary>
+        /// <param name="cmdType">命令类型(存储过程, 文本, 等等)</param> 
+        /// <param name="cmdText">存储过程名称或者sql命令语句</param> 
+        /// <param name="orderByStr">排序字段 asc,排序字段 desc</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageSize">每页显示的条数</param>
+        /// <param name="commandParameters">参数</param>
+        /// <param name="count">返回的数量</param>
+        /// <returns>符合条件的DataTable数据集</returns>
+        public DataTable GetPageList(CommandType cmdType, string cmdText, string orderByStr, int pageIndex, int pageSize, MySqlParameter[] commandParameters, ref int count)
+        {
+            DataTable result;
+            try
+            {
+                int num = (pageIndex - 1) * pageSize;
+                string countSql = $"SELECT COUNT(1) FROM ({cmdText}) AS T";//查询数量的语句
+                object obj = this.ExecuteScalar(cmdType, countSql, commandParameters);
+                if (null != obj && !Convert.IsDBNull(obj))
+                {
+                    count = Convert.ToInt32(obj);
+                }
+                string sql = $"SELECT * FROM ({cmdText}) AS T ORDER BY {orderByStr} LIMIT {num},{pageSize}";
+                result = this.GetDataTableBySQL(cmdType, cmdText, commandParameters);
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                //throw new Exception(ex.Message + ex.StackTrace);
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 根据sql语句获取Model数据列表
         /// </summary>
         /// <typeparam name="T">要转换的model类型</typeparam>

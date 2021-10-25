@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
+using FX.FP.NetCore.Common.DotNetData;
 
 namespace FX.FP.NetCore.WebApi.Controllers
 {
@@ -49,6 +50,13 @@ namespace FX.FP.NetCore.WebApi.Controllers
         public List<BlogPost> GetList()
         {
             return (_blogPost.GetList());
+        }
+
+        [HttpGet("GetPageList")]
+        public JsonResult GetPageList(string createDate)
+        {
+            DataTable table = _blogPost.GetPageList(Convert.ToDateTime(createDate));
+            return new JsonResult(table.ToJson());
         }
     }
 }

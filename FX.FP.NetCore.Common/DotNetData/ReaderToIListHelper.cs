@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -141,4 +142,32 @@ namespace FX.FP.NetCore.Common.DotNetData
             return obj is DBNull || string.IsNullOrEmpty(obj.ToString());
         }
     }
+
+    public static class DataTableToIListHelper
+    {
+        public static List<Dictionary<string, object>> ToJson(this DataTable dt)
+        {
+            var list = new List<Dictionary<string, object>>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                var dict = new Dictionary<string, object>();
+
+                foreach (DataColumn col in dt.Columns)
+                {
+                    if (row[col].ToString().StartsWith('{') || row[col].ToString().StartsWith('['))
+                    {
+                        dict[col.ColumnName] = JsonConvert.DeserializeObject(row[col].ToString());
+                    }
+                    else
+                    {
+                        dict[col.ColumnName] = row[col];
+                    }
+                }
+                list.Add(dict);
+            }
+            return list;
+        }
+    }
+
 }

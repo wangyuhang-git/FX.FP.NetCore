@@ -3,6 +3,7 @@ using FX.FP.NetCore.Service;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,21 @@ namespace FX.FP.NetCore.Business
         {
             List<T> list = db.GetListBySQL<T>(System.Data.CommandType.Text, "select * from BlogPost").ToList();
             return list;
+        }
+
+        public DataTable GetPageList(DateTime createDate)
+        {
+            List<MySql.Data.MySqlClient.MySqlParameter> mySqlParameter = new List<MySql.Data.MySqlClient.MySqlParameter>() {
+                new MySql.Data.MySqlClient.MySqlParameter()
+                {
+                    ParameterName = "@createdate",
+                    DbType = DbType.String,
+                    Value = createDate.ToShortDateString()
+                }
+            };
+            int count = 0;
+            return db.GetPageList(System.Data.CommandType.Text, "select * from BlogPost where createdate>=@createdate order by createdate desc", "createdate desc",
+                   5, 1, mySqlParameter.ToArray(), ref count);
         }
     }
 }

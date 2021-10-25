@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,5 +12,7 @@ namespace FX.FP.NetCore.Interface
         bool Insert(string title, string content);
 
         List<T> GetList();
+
+        DataTable GetPageList(DateTime createDate);
     }
 }
