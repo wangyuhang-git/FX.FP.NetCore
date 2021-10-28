@@ -1,5 +1,7 @@
-﻿using FX.FP.NetCore.Models;
+﻿using FX.FP.NetCore.Hubs;
+using FX.FP.NetCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,13 +15,16 @@ namespace FX.FP.NetCore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHubContext<NotificationHub> _hubContext;
+        public HomeController(ILogger<HomeController> logger, IHubContext<NotificationHub> hubContext)
         {
             _logger = logger;
+            _hubContext = hubContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await _hubContext.Clients.All.SendAsync("Notify", $"Home page loaded at: {DateTime.Now}");
             return View();
         }
 
