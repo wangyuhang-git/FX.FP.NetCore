@@ -56,7 +56,7 @@ namespace FX.FP.NetCore.WebApi.Controllers
         public JsonResult GetPageList(string createDate)
         {
             DataTable table = _blogPost.GetPageList(Convert.ToDateTime(createDate));
-            return new JsonResult(table.ToJson());
+            return new JsonResult(table.ToListForJson());
         }
     }
 }

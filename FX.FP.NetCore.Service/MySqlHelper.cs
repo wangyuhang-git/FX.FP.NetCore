@@ -348,7 +348,7 @@ namespace FX.FP.NetCore.Service
                     count = Convert.ToInt32(obj);
                 }
                 string sql = $"SELECT * FROM ({cmdText}) AS T ORDER BY {orderByStr} LIMIT {num},{pageSize}";
-                result = this.GetDataTableBySQL(cmdType, cmdText, commandParameters);
+                result = this.GetDataTableBySQL(cmdType, sql, commandParameters);
             }
             catch (Exception ex)
             {

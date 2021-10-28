@@ -40,7 +40,7 @@ namespace FX.FP.NetCore.Business
             };
             int count = 0;
             return db.GetPageList(System.Data.CommandType.Text, "select * from BlogPost where createdate>=@createdate order by createdate desc", "createdate desc",
-                   5, 1, mySqlParameter.ToArray(), ref count);
+                   2, 5, mySqlParameter.ToArray(), ref count);
         }
     }
 }

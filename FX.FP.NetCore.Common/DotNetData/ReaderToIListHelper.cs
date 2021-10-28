@@ -33,7 +33,7 @@ namespace FX.FP.NetCore.Common.DotNetData
             return objDataTable;
         }
 
-        public static T IDataReaderToModel<T>(IDataReader dr) where T : class,new()
+        public static T IDataReaderToModel<T>(IDataReader dr) where T : class, new()
         {
             T result;
             try
@@ -80,7 +80,7 @@ namespace FX.FP.NetCore.Common.DotNetData
             return result;
         }
 
-        public static List<T> IDataReaderToList<T>(IDataReader dr) where T : class,new()
+        public static List<T> IDataReaderToList<T>(IDataReader dr) where T : class, new()
         {
             List<T> result;
             try
@@ -145,7 +145,7 @@ namespace FX.FP.NetCore.Common.DotNetData
 
     public static class DataTableToIListHelper
     {
-        public static List<Dictionary<string, object>> ToJson(this DataTable dt)
+        public static List<Dictionary<string, object>> ToListForJson(this DataTable dt)
         {
             var list = new List<Dictionary<string, object>>();
 
