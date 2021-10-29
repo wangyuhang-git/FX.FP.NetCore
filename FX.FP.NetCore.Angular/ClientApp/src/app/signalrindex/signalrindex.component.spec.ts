@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SingalrindexComponent } from './singalrindex.component';
+import { SignalrindexComponent } from './signalrindex.component';
 
 describe('SingalrindexComponent', () => {
-  let component: SingalrindexComponent;
-  let fixture: ComponentFixture<SingalrindexComponent>;
+  let component: SignalrindexComponent;
+  let fixture: ComponentFixture<SignalrindexComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SingalrindexComponent ]
+      declarations: [ SignalrindexComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SingalrindexComponent);
+    fixture = TestBed.createComponent(SignalrindexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

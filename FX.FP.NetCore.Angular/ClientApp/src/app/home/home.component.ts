@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SingalrindexComponent } from '../singalrindex/singalrindex.component';
+import { SignalrindexComponent } from '../signalrindex/signalrindex.component';
 
 
 @Component({

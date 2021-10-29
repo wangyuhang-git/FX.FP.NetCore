@@ -9,7 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { SingalrindexComponent } from './singalrindex/singalrindex.component';
+import { SignalrindexComponent } from './signalrindex/signalrindex.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { SingalrindexComponent } from './singalrindex/singalrindex.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    SingalrindexComponent
+    SignalrindexComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
