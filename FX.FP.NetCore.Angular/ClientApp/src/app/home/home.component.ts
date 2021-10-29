@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { SingalrindexComponent } from '../singalrindex/singalrindex.component';
+
 
 @Component({
   selector: 'app-home',
