@@ -9,6 +9,7 @@ namespace FX.FP.NetCore.Angular
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,6 +20,19 @@ namespace FX.FP.NetCore.Angular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        string[] cors = Configuration.GetSection("AllowedCors").Value.Split(new char[] { ',', '|' });
+                        builder//.WithOrigins(cors);
+                        .AllowAnyOrigin();
+                    });
+            });
+
+            //services.AddResponseCaching();
+
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -47,6 +61,11 @@ namespace FX.FP.NetCore.Angular
 
             app.UseRouting();
 
+            //ÆôÓÃ¿çÓò
+            app.UseCors(MyAllowSpecificOrigins);
+
+            //app.UseResponseCaching();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -64,6 +83,7 @@ namespace FX.FP.NetCore.Angular
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
