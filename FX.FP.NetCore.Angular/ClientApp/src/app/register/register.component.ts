@@ -3,17 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
-
-  loginForm: FormGroup;
-
+export class RegisterComponent implements OnInit {
+  private registerForm: FormGroup;
   constructor(private fb: FormBuilder, private authService: AuthService) {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       'username': ['', Validators.required],
+      'email': ['', Validators.required],
       'password': ['', Validators.required]
     });
   }
@@ -21,10 +20,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {
-    console.log(this.loginForm.value);
-    this.authService.login(this.loginForm.value).subscribe(data => {
-      this.authService.setToken(data['token']);
+  register() {
+    this.authService.register(this.registerForm.value).subscribe(data => {
+      console.log(data);
     });
   }
 }

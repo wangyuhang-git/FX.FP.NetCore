@@ -17,7 +17,10 @@ namespace FX.FP.NetCore.WebApi.Features.Identity
         private readonly IIdentityService identity;
         private readonly AppSettings appSettings;
 
-        public IdentityController(UserManager<User> userManager, IIdentityService identity, IOptions<AppSettings> appSettings)
+        public IdentityController(
+            UserManager<User> userManager,
+            IIdentityService identity,
+            IOptions<AppSettings> appSettings)
         {
             this.userManager = userManager;
             this.identity = identity;
@@ -43,5 +46,27 @@ namespace FX.FP.NetCore.WebApi.Features.Identity
             return Ok();
         }
 
+        [Route(nameof(Login))]
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
+        {
+            var user = await this.userManager.FindByNameAsync(model.UserName);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
+            if (!passwordValid)
+            {
+                return Unauthorized();
+            }
+            var token = this.identity.GenerateJwtToken(
+                user.Id,
+                user.UserName,
+                this.appSettings.Secret);
+
+            return new LoginResponseModel { Token = token };
+        }
     }
 }
