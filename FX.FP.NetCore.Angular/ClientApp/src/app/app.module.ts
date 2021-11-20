@@ -13,6 +13,9 @@ import { SignalrindexComponent } from './signalrindex/signalrindex.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { RegisterComponent } from './register/register.component';
+import { ListCatsComponent } from './cats/list-cats/list-cats.component';
+import { EditCatComponent } from './cats/edit-cat/edit-cat.component';
+import { DetailsCatComponent } from './cats/details-cat/details-cat.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { RegisterComponent } from './register/register.component';
     FetchDataComponent,
     SignalrindexComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ListCatsComponent,
+    EditCatComponent,
+    DetailsCatComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,7 +43,7 @@ import { RegisterComponent } from './register/register.component';
       // { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-
+      { path: 'cats', component: ListCatsComponent }
     ])
   ],
   providers: [AuthService],
