@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { AngularMaterialModule } from './angular-material/angular-material.module';
+
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -16,6 +18,8 @@ import { RegisterComponent } from './register/register.component';
 import { ListCatsComponent } from './cats/list-cats/list-cats.component';
 import { EditCatComponent } from './cats/edit-cat/edit-cat.component';
 import { DetailsCatComponent } from './cats/details-cat/details-cat.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListUsersComponent } from './Users/list-users/list-users.component';
 
 @NgModule({
   declarations: [
@@ -29,13 +33,15 @@ import { DetailsCatComponent } from './cats/details-cat/details-cat.component';
     RegisterComponent,
     ListCatsComponent,
     EditCatComponent,
-    DetailsCatComponent
+    DetailsCatComponent,
+    ListUsersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularMaterialModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'register', component: RegisterComponent },
@@ -43,8 +49,10 @@ import { DetailsCatComponent } from './cats/details-cat/details-cat.component';
       // { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'cats', component: ListCatsComponent }
-    ])
+      { path: 'cats', component: ListCatsComponent },
+      { path: 'users', component: ListUsersComponent }
+    ]),
+    BrowserAnimationsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

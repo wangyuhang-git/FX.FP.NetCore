@@ -3,6 +3,7 @@ using FX.FP.NetCore.WebApi.Features.Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,15 @@ namespace FX.FP.NetCore.WebApi.Features.Identity
                 this.appSettings.Secret);
 
             return new LoginResponseModel { Token = token };
+        }
+
+        [HttpGet]
+        [Route(nameof(GetListAsync))]
+        [AllowAnonymous]
+        public async Task<List<User>> GetListAsync()
+        {
+            List<User> list = await this.userManager.Users.ToListAsync();
+            return list;
         }
     }
 }

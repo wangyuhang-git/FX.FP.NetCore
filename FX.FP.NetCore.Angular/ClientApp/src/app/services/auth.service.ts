@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment'
 export class AuthService {
   private loginPath = environment.apiUrl + 'Identity/Login';
   private registerPath = environment.apiUrl + 'Identity/Register';
+  private userListPath = environment.apiUrl + 'Identity/GetListAsync';
 
   constructor(private http: HttpClient) {
 
@@ -20,6 +21,10 @@ export class AuthService {
 
   register(data): Observable<any> {
     return this.http.post(this.registerPath, data);
+  }
+
+  list(): Observable<any> {
+    return this.http.get(this.userListPath);
   }
 
   setToken(token) {
