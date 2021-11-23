@@ -16,12 +16,10 @@ export class AuthService {
   }
 
   login(data): Observable<any> {
-    debugger;
     return this.http.post(this.loginPath, data);
   }
 
   register(data): Observable<any> {
-    debugger;
     return this.http.post(this.registerPath, data);
   }
 
