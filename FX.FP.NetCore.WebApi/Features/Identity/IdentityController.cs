@@ -73,10 +73,33 @@ namespace FX.FP.NetCore.WebApi.Features.Identity
         [HttpGet]
         [Route(nameof(GetListAsync))]
         [AllowAnonymous]
-        public async Task<List<User>> GetListAsync()
+        public async Task<Page<User>> GetListAsync()
         {
             List<User> list = await this.userManager.Users.ToListAsync();
-            return list;
+
+            return new Page<User>(list, list.Count, 0, 5);
         }
+    }
+
+    public class Page<T> where T : class, new()
+    {
+        public Page(List<T> list, int totleCount, int pageIndex, int pageSize)
+        {
+            this.Data = list;
+            this.PageIndex = pageIndex;
+            this.PageSize = pageSize;
+            this.TotalCount = totleCount;
+            this.TotalPages = (int)Math.Ceiling(totleCount / (double)pageSize);
+        }
+
+        public List<T> Data { get; set; }
+
+        public int TotalCount { get; set; }
+
+        public int PageIndex { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int TotalPages { get; set; }
     }
 }
