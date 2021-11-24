@@ -1,37 +1,48 @@
 <nz-layout>
     <nz-header>
-      <div class="logo"></div>
-      <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+      <div class="logo">
+        <img src="assets/images/logo.png" title="平湖市建筑业智慧监管云平台">
+      </div>
+      <div class="top-menu">
+        <span class="actionItem">
+          <img src="assets/images/icon1.png" alt="">返回首页
+        </span>
+        <span class="actionItem">
+          <img src="assets/images/icon2.png" alt="">修改密码
+        </span>
+        <span class="actionItem">
+          <img src="assets/images/icon3.png" alt="">退出
+        </span>
+      </div>
+      <!-- <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
         <li nz-menu-item nzSelected>nav 1</li>
         <li nz-menu-item>nav 2</li>
         <li nz-menu-item>nav 3</li>
-      </ul>
+      </ul> -->      
     </nz-header>
     <nz-layout>
       <nz-sider nzWidth="200px" nzTheme="light">
         <ul nz-menu nzMode="inline" class="sider-menu">
-          <li nz-submenu nzOpen nzIcon="user" nzTitle="subnav 1">
+          <li nz-submenu nzOpen nzIcon="user" nzTitle="系统维护" class="firstFloorMenu">
             <ul>
-              <li nz-menu-item nzSelected>option1</li>
-              <li nz-menu-item>option2</li>
-              <li nz-menu-item>option3</li>
-              <li nz-menu-item>option4</li>
+              <li nz-menu-item nzSelected>企业账号注册</li>
+              <li nz-menu-item>身份识别锁订购</li>
+              <li nz-menu-item>考情设备订购</li>
+              <li nz-menu-item>数据字典</li>
             </ul>
           </li>
-          <li nz-submenu nzTitle="subnav 2" nzIcon="laptop">
+          <li nz-submenu nzTitle="设备管理" nzIcon="laptop" class="firstFloorMenu">
             <ul>
-              <li nz-menu-item>option5</li>
-              <li nz-menu-item>option6</li>
-              <li nz-menu-item>option7</li>
-              <li nz-menu-item>option8</li>
+              <li nz-menu-item>扬尘厂家维护</li>
+              <li nz-menu-item>扬尘接入登记</li>
+              <li nz-menu-item>实名制厂家维护</li>
+              <li nz-menu-item>视频绑定管理</li>
             </ul>
           </li>
-          <li nz-submenu nzTitle="subnav 3" nzIcon="notification">
+          <li nz-submenu nzTitle="知识库管理" nzIcon="notification" class="firstFloorMenu">
             <ul>
-              <li nz-menu-item>option9</li>
-              <li nz-menu-item>option10</li>
-              <li nz-menu-item>option11</li>
-              <li nz-menu-item>option12</li>
+              <li nz-menu-item>常用规范库</li>
+              <li nz-menu-item>信用扣分库</li>
             </ul>
           </li>
         </ul>

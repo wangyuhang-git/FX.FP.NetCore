@@ -1,13 +1,34 @@
 .logo {
-    width: 120px;
-    height: 31px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px 30px 16px 0;
+    margin-left: 20px;
     float: left;
   }
 
+  .top-menu{
+    margin-right: 20px;
+    float: right;
+  }
+
+  span.actionItem{
+    padding: 5px 10px;
+    border: 1px solid #fff;
+    color: #4B8DF8;
+    margin-bottom: 1px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  span.actionItem img{
+    border: 0px none;
+    background-position: 0px 0px;
+    vertical-align: middle;
+    margin: 0px 5px 0px 0px;
+    height: 18px;
+    width: 18px;
+  }
+
   .header-menu {
-    line-height: 64px;
+    line-height: 60px;
+    height: 60px;
   }
 
   .sider-menu {
@@ -18,6 +39,17 @@
   .inner-layout {
     padding: 0 24px 24px;
   }
+
+  .firstFloorMenu{
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  .firstFloorMenu *{
+    color: #000;
+    font-weight: normal;
+  }
+
 
   nz-breadcrumb {
     margin: 16px 0;
