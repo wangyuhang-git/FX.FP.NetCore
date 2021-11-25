@@ -41,8 +41,8 @@
           </li>
           <li nz-submenu nzTitle="知识库管理" nzIcon="notification" class="firstFloorMenu">
             <ul>
-              <li nz-menu-item>常用规范库</li>
-              <li nz-menu-item>信用扣分库</li>
+              <li nz-menu-item routerLink="users">常用规范库</li>
+              <li nz-menu-item routerLink="cats">信用扣分库</li>
             </ul>
           </li>
         </ul>
@@ -53,7 +53,9 @@
           <nz-breadcrumb-item>List</nz-breadcrumb-item>
           <nz-breadcrumb-item>App</nz-breadcrumb-item>
         </nz-breadcrumb>
-        <nz-content>Content</nz-content>
+        <nz-content>
+          <router-outlet></router-outlet>
+        </nz-content>
       </nz-layout>
     </nz-layout>
   </nz-layout>

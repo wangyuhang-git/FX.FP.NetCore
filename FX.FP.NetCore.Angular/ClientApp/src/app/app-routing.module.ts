@@ -10,14 +10,18 @@ import { ListCatsComponent } from './cats/list-cats/list-cats.component';
 import { ListUsersComponent } from './Users/list-users/list-users.component';
 
 const routes: Routes = [
-  // { path: '', component: LoginComponent, pathMatch: 'full' },
-  { path: 'default', component: DefaultComponent },
+  { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'counter', component: CounterComponent },
   { path: 'fetch-data', component: FetchDataComponent },
-  { path: 'cats', component: ListCatsComponent },
-  { path: 'users', component: ListUsersComponent }
+  {
+    path: 'default', component: DefaultComponent,
+    children: [
+      { path: 'users', component: ListUsersComponent },
+      { path: 'cats', component: ListCatsComponent }
+    ]
+  }
 ];
 
 @NgModule({
