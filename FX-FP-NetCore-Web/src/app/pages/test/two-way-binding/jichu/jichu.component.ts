@@ -9,6 +9,9 @@ export class JichuComponent implements OnInit {
 
   @Input() size: number | string = 0;
   @Output() sizeChange = new EventEmitter<number>();
+
+  userName: string = '';
+
   constructor() { }
 
   ngOnInit(): void {

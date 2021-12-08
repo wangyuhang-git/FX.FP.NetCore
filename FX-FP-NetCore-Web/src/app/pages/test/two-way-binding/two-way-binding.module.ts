@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TwoWayBindingRoutingModule } from './two-way-binding-routing.module';
 import { TwoWayBindingComponent } from './two-way-binding.component';
 import { JichuComponent } from './jichu/jichu.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { JichuComponent } from './jichu/jichu.component';
   ],
   imports: [
     CommonModule,
-    TwoWayBindingRoutingModule
+    TwoWayBindingRoutingModule,
+    FormsModule
   ]
 })
 export class TwoWayBindingModule { }
