@@ -7,5 +7,72 @@
 <p>
     <input type="text" name="txtUserName" [(ngModel)]="userName" />
     <span>{{userName}}</span>
-
 </p>
+
+<div>
+    <input type="button" class="btn btn-primary" value="toggle" (click)="toggleShow()" />
+    <div *ngIf="show">
+        这个是ngif的控制模块
+    </div>
+    <div *ngIf="show as aa">
+        用as给aa赋值： {{aa}}
+    </div>
+    <ng-template [ngIf]="show" let-aa="ngIf">
+        <p>用let-给aa赋值：{{aa}}</p>
+    </ng-template>
+</div>
+
+
+<div [ngSwitch]="city">
+    <p *ngSwitchCase="'平湖'">平湖</p>
+    <p *ngSwitchCase="'海盐'">海盐</p>
+    <p *ngSwitchCase="'海宁'">海宁</p>
+    <p *ngSwitchCase="'经开区'">经开区</p>
+</div>
+
+<div>
+    <input type="text" #phone />
+    <span>{{this.phoneStr}}</span>
+    <button (click)="callPhone(phone.value)">点击</button>
+</div>
+<hr>
+<div>
+    <form #itemForm="ngForm" (ngSubmit)="onSubmit(itemForm)">
+        <p>
+            <label>姓名:</label>
+            <input type="text" name="name" class="form-control" ngModel required>
+        </p>
+        <p>
+            <label>身份证号码:</label>
+            <input type="text" name="idcard" class="form-control" ngModel required>
+        </p>
+        <p><button type="submit">提交</button></p>
+    </form>
+    <div [hidden]="!itemForm.form.valid">
+        <p>{{submitMessage}}</p>
+    </div>
+</div>
+<hr>
+<div>
+    <input type="text" #ref1 [(ngModel)]="firstExample">
+    <p><span>{{firstExample}}</span></p>
+    <p><span *ngIf="true">{{ref1.value}}</span></p>
+</div>
+<br>
+<div>
+    <p *ngFor="let item of citys;
+    index as i;
+    count as len;
+    let ev = even;
+    let od = odd;
+    let isFirst = first;
+    let isLast = last;" [class.even]="ev" [class.odd]="od" trackBy="trackByCity">
+        {{i}}-{{len}}-{{item.name}}
+        {{isFirst}}--{{isLast}}
+    </p>
+    <button (click)="changeCitys()">获取城市</button>
+</div>
+
+<div appHighlight>
+    这个是属性指令
+</div>
