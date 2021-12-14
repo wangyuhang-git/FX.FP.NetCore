@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { ZhilingComponent } from './zhiling/zhiling.component';
 import { Zhiling2Component } from './zhiling2/zhiling2.component';
 import { HighlightDirective } from './directive/highlight.directive';
+import { UnlessDirective } from './directive/unless.directive';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { HighlightDirective } from './directive/highlight.directive';
     JichuComponent,
     ZhilingComponent,
     Zhiling2Component,
-    HighlightDirective
+    HighlightDirective,
+    UnlessDirective
   ],
   imports: [
     CommonModule,

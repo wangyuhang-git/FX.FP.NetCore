@@ -26,6 +26,10 @@ export class JichuComponent implements OnInit {
 
   firstExample: any;
 
+  color!: string;
+
+  condition: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -62,8 +66,8 @@ export class JichuComponent implements OnInit {
     return item.id;
   }
 
-  changeCitys(){
-    this.citys= [{ id: 1, name: '平湖' }, { id: 2, name: '海盐' }, { id: 3, name: '经开区' }, { id: 4, name: '海宁' }, { id: 5, name: '开化' }];
+  changeCitys() {
+    this.citys = [{ id: 1, name: '平湖' }, { id: 2, name: '海盐' }, { id: 3, name: '经开区' }, { id: 4, name: '海宁' }, { id: 5, name: '开化' }];
   }
 
 }

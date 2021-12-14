@@ -76,3 +76,42 @@
 <div appHighlight>
     这个是属性指令
 </div>
+
+<hr />
+<div>
+    <div>
+        <input type="radio" name="colors" (click)="color='lightgreen'">Green
+        <input type="radio" name="colors" (click)="color='yellow'">Yellow
+        <input type="radio" name="colors" (click)="color='cyan'">Cyan
+    </div>
+    <p [appHighlight]='color'>Highlight me!</p>
+    <p [appHighlight]='color' defaultColor='violet'>Highlight me too!</p>
+</div>
+
+<hr>
+<div>
+    <p ngNonBindable>
+        {{1+1}}
+    </p>
+</div>
+
+<hr>
+<div>
+    <p>
+        condition的值
+        <span [ngClass]="{'a':!condition,'b':condition,'unless':true}">
+            {{condition}}
+        </span>
+    </p>
+    <button (click)="condition=!condition" [ngClass]="{'a':!condition,'b':condition}">
+        切换conditon的值为{{condition?'false':'true'}}
+    </button>
+</div>
+<div>
+    <p *appUnless="condition" class="unless a">
+        a这里显示，因为condition是false
+    </p>
+    <p *appUnless="!condition" class="unless b">
+        b这里显示，因为condition是ture
+    </p>
+</div>
