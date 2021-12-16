@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginFormComponent } from './login-form.component';
 
 const routes: Routes = [
+  //{ path: '', data: { key: 'login-form', shouldDetach: 'no' }, component: LoginFormComponent },
   { path: '', data: { key: 'login-form', shouldDetach: 'no' }, component: LoginFormComponent }
 ];
 
