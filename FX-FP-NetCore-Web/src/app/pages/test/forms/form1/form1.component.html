@@ -26,5 +26,12 @@
         </div>
         <button type="submit" [disabled]="!oneForm.valid">提交</button>
     </form>
+    <div>
     {{this.oneForm.value|json}}
+</div>
+<div>
+    <button >获取用户名</button>
+    {{username?.value}}
+</div>
+    
 </div>
