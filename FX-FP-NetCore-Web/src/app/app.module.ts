@@ -15,6 +15,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { TwoWayBindingModule } from './pages/test/two-way-binding/two-way-binding.module';
 import { Form1Component } from './pages/test/forms/form1/form1.component';
+import { TransferPanelComponent } from './pages/test/transfer/transfer-panel/transfer-panel.component';
 
 
 registerLocaleData(zh);
@@ -22,7 +23,8 @@ registerLocaleData(zh);
 @NgModule({
   declarations: [
     AppComponent,
-    Form1Component
+    Form1Component,
+    TransferPanelComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,8 @@
+<div class="transfer-box">
+    <div><span>1</span>/133</div>
+    <div class="transfer-panel">
+        <ul>
+            <li *ngFor="let item of list" [class.active]="item.checked">{{item.value}}</li>
+        </ul>
+    </div>
+</div>
