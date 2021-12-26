@@ -1,8 +1,11 @@
 <div class="transfer-box">
     <div><span>1</span>/133</div>
+    <div>
+        <input type="text" name="txtSearch">
+    </div>
     <div class="transfer-panel">
         <ul>
-            <li *ngFor="let item of list" [class.active]="item.checked">{{item.value}}</li>
+            <li *ngFor="let item of list" [class.active]="item.checked" (click)="itemClick(item)">{{item.value}}</li>
         </ul>
     </div>
 </div>

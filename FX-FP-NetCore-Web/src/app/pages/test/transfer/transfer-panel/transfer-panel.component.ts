@@ -9,6 +9,7 @@ import { transfer } from './transfer';
 export class TransferPanelComponent implements OnInit {
 
   list: transfer[] = [];
+  showList: transfer[] = [];
   constructor() {
     this.setList();
   }
@@ -29,5 +30,15 @@ export class TransferPanelComponent implements OnInit {
 
   tragetIndex(key: string): number {
     return this.list.findIndex(c => c.key = key);
+  }
+
+  itemClick(item: transfer) {
+    let index = this.showList.findIndex(c=>c.key==item.key);
+    if (index<=-1) {
+      this.showList.push(item);
+    } else {
+      this.showList.splice(index,1);
+    }
+    console.log(this.showList);
   }
 }
