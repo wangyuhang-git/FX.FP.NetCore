@@ -1,11 +1,12 @@
 <div class="transfer-box">
-    <div><span>1</span>/133</div>
-    <div>
-        <input type="text" name="txtSearch">
+    <div><span *ngIf="selectList.length">{{selectList.length}}/ </span>{{showList.length}} 项</div>
+    <div *ngIf="showSearchBox">
+        <input type="text" (input)="onInput($event)" name="txtSearch">
     </div>
     <div class="transfer-panel">
         <ul>
-            <li *ngFor="let item of list" [class.active]="item.checked" (click)="itemClick(item)">{{item.value}}</li>
+            <li [class.active]="tragetIndex(item.key)>-1" *ngFor="let item of showList;" (click)="itemClick(item)">
+                {{item.value}}</li>
         </ul>
     </div>
 </div>

@@ -1,0 +1,7 @@
+<div>
+    <p>transfer-page works!</p>
+    <div>
+        <button (click)="setList()">重置列表</button>
+    </div>
+    <app-transfer-panel [list]="list" [showSearchBox]="true" (changed)="onChanged($event)"></app-transfer-panel>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { transfer } from './transfer';
 
 @Component({
@@ -6,39 +6,49 @@ import { transfer } from './transfer';
   templateUrl: './transfer-panel.component.html',
   styleUrls: ['./transfer-panel.component.less']
 })
-export class TransferPanelComponent implements OnInit {
-
-  list: transfer[] = [];
+export class TransferPanelComponent implements OnInit, OnChanges {
+  @Input() list: transfer[] = [];
+  @Input() showSearchBox = false;
+  selectList: transfer[] = [];
   showList: transfer[] = [];
+  @Output() changed = new EventEmitter<transfer[]>();
+
+
   constructor() {
-    this.setList();
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //console.log(changes);
+    const { list } = changes;
+    if (list) {
+      //this.selectList = [];
+      this.showList = list.currentValue.slice();
+      this.selectList = this.list.filter(c => c.checked);//filter返回的是一个新的数组
+    }
   }
 
   ngOnInit(): void {
   }
 
-  setList() {
-    let item = 'item' + Date.now().toString().slice(-3);
-    for (let i = 0; i < 20; i++) {
-      this.list.push({
-        checked: i % 6 == 0,
-        key: item + '_' + i,
-        value: `${item}_${i + 1}`
-      });
-    }
-  }
-
   tragetIndex(key: string): number {
-    return this.list.findIndex(c => c.key = key);
+    return this.selectList.findIndex(c => c.key == key);
   }
 
   itemClick(item: transfer) {
-    let index = this.showList.findIndex(c=>c.key==item.key);
-    if (index<=-1) {
-      this.showList.push(item);
+    const index = this.tragetIndex(item.key);
+    if (index == -1) {
+      this.selectList.push(item);
     } else {
-      this.showList.splice(index,1);
+      this.selectList.splice(index, 1);
     }
-    console.log(this.showList);
+    //console.log(item);
+    this.changed.emit(this.selectList);
+  }
+
+  onInput(event: Event) {
+    const { value } = event.target as HTMLInputElement;//这里需要断言一下
+    //console.log("value",value);
+    this.showList = this.list.filter(c => c.value.includes(value));
   }
 }

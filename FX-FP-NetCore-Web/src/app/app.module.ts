@@ -16,6 +16,7 @@ import { SharedModule } from './shared/shared.module';
 import { TwoWayBindingModule } from './pages/test/two-way-binding/two-way-binding.module';
 import { Form1Component } from './pages/test/forms/form1/form1.component';
 import { TransferPanelComponent } from './pages/test/transfer/transfer-panel/transfer-panel.component';
+import { TransferPageComponent } from './pages/test/transfer/transfer-page/transfer-page.component';
 
 
 registerLocaleData(zh);
@@ -24,7 +25,8 @@ registerLocaleData(zh);
   declarations: [
     AppComponent,
     Form1Component,
-    TransferPanelComponent
+    TransferPanelComponent,
+    TransferPageComponent
   ],
   imports: [
     BrowserModule,
